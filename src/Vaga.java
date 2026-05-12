@@ -50,11 +50,49 @@ public class Vaga {
                 + ", reservada=" + reservada + "]";
     }
     
-    public void ocuparVaga(){
+    public void ocuparVaga(Veiculo veiculo){//saber que veiculo esta na vaga 
         //validar se a vaga ja esta ocupada
+        if (ocupada || reservada) {
+            System.out.println("Vaga ja  ocupada nao é possivel ocupar de novo ");
+            return;
+        }
+
+        //atualizar estado e associar o veiculo a vaga 
+        this.setOcupada(true);
+        this.setVeiculoAssociado(veiculo);
     }
-    public void liberarVaga(){}
-    public void verificarDisponibilidade(){}
-    public void reservarVaga(){}
-    public void cancelarReserva(){}
+    public void liberarVaga(){
+        //verificar se esta livre 
+        if (verificarDisponibilidade()) {
+            System.out.println("Vaga livre nao ha necessidade de liberar");
+            return;
+        }
+
+        //so atualizar o estado 
+        this.setOcupada(false);
+        this.setVeiculoAssociado(null);
+    }
+    public boolean verificarDisponibilidade(){
+        if (!ocupada && !reservada) {
+            System.out.println("Vaga esta livre");
+            return true;
+        }
+        return false;
+    }
+    public void reservarVaga(){
+        if (!verificarDisponibilidade()) {
+            System.out.println("Vaga ja reservada ou ocupada");
+            return;
+        }
+
+        this.setReservada(true);
+    }
+    public void cancelarReserva(){
+        if (!reservada) {
+            System.out.println("Nao tens vaga reservada ");
+            return;
+        }
+
+        this.setReservada(false);
+    }
 }
