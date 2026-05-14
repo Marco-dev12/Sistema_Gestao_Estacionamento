@@ -53,7 +53,7 @@ public class Vaga {
     public void ocuparVaga(Veiculo veiculo){//saber que veiculo esta na vaga 
         //validar se a vaga ja esta ocupada
         if (ocupada || reservada) {
-            System.out.println("Vaga ja  ocupada nao é possivel ocupar de novo ");
+            System.out.println("Vaga ja  ocupada ou reservada nao é possivel ocupar de novo ");
             return;
         }
 
@@ -74,7 +74,6 @@ public class Vaga {
     }
     public boolean verificarDisponibilidade(){
         if (!ocupada && !reservada) {
-            System.out.println("Vaga esta livre");
             return true;
         }
         return false;
