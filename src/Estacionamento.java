@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Estacionamento {
     //o “cérebro” do sistema ou seja coordena tudo
+    //vai representar os estcionados atuais
 
     private ArrayList<Veiculo> veiculos;
     private ArrayList<Vaga> vagas;
@@ -62,19 +63,57 @@ public class Estacionamento {
         }
 
         //verificar se existe vaga livre
-        //vou criar uma variavel do tipo vaga para ficar com o valor da vaga livre 
+        //vou criar uma variavel do tipo vaga para ficar com o valor da vaga livre pois caso existir vou ter de liga-la com o veiculo
         Vaga vagaLivre = this.procurarVagaLivre();
         if (vagaLivre == null) {
             System.out.println("Nao a vagas disponiveis ");
             return;
         }
 
-        //vou ligar o veiculo a vaga e a vaga ao veiculo 
+       
+
+        //verificar se o veiculo ja nao esta na lista percorendo e comparando matricula
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getMatricula().equals(veiculoEntrar.getMatricula())) {
+            System.out.println("Veiculo ja adicionado a lista");
+            return;
+        }     
+        }
+       
+        //vou ligar o veiculo a vaga e a vaga ao veiculo e adicionar veiculo a lista 
         veiculoEntrar.registrarEntrada(vagaLivre);
         vagaLivre.ocuparVaga(veiculoEntrar);
         veiculos.add(veiculoEntrar);
     }
-    public void registraSaida(){}  
+
+    public void registraSaida(Veiculo veiculoSair){
+        //verificar se veiculo existe 
+        if (veiculoSair == null) {
+            System.out.println("Veiculo nao existe");
+            return;
+        }
+
+        //verificar se veiculo esta estacionado
+        if (!veiculoSair.isEstacionado()) {
+            System.out.println("Veiculo nao esta estacionado");
+            return;
+        }
+
+        //verificar se veiculo possui vaga associada
+        Vaga vagaAssociada = veiculoSair.getVagaAssociada();
+
+    
+        if (vagaAssociada == null) {
+            System.out.println("Nao ha vaga existente");
+            return;
+        }
+
+        //liberar vaga,registrar saida e remover da lista
+        vagaAssociada.liberarVaga();
+        veiculoSair.registrarSaida();
+        veiculos.remove(veiculoSair);
+    }  
+    
     public Vaga procurarVagaLivre(){
         //percorer a lista de vaga
         for (Vaga vaga : vagas) {
@@ -85,7 +124,20 @@ public class Estacionamento {
         }
         return null;
     }
-    public void listarVagas(){}
+    
+    public void listarVagas(){
+        //Mostrar todas as vagas cadastradas no estacionamento.
+        //veririfcar se existem vagas cadastradas oou seja se a lista esta vazia ou nao 
+        if (vagas.isEmpty()) {
+            System.out.println("Lista esta vazia");
+            return;
+        }
+
+        for (Vaga vaga : vagas) {
+            System.out.println(vaga);
+        }
+    }
+
     public void listarVeiculosEstacionados(){}   
     public void atualizarVagaVeiculo(){}
     public void procurarVeiculoPorMatricula(){}  

@@ -46,8 +46,21 @@ public class Vaga {
 
     @Override
     public String toString() {
-        return "Vaga [numeroVaga=" + numeroVaga + ", ocupada=" + ocupada + ", veiculoAssociado=" + veiculoAssociado
-                + ", reservada=" + reservada + "]";
+        //em vez de aparecer true e false 
+        String estado;
+        if (reservada) {
+            estado ="Reservada";
+        }else if(ocupada){
+            estado = "Ocupada";
+        }else{
+            estado = "Livre";
+        }
+        //caso tenha um veiculo associado em vez de mostrar toda informaçao do veiculo mostra so a matricula
+        if (veiculoAssociado != null) {
+            return "Vaga [numeroVaga =" + numeroVaga + ", estado =" + estado + ", veiculoAssociado =" + veiculoAssociado.getMatricula() +"]";
+        }else{
+            return "Vaga [numeroVaga =" + numeroVaga + ", estado =" + estado + "veiculo associado = "+"Nenhum veiculo aasociado" +"]";
+        }
     }
     
     public void ocuparVaga(Veiculo veiculo){//saber que veiculo esta na vaga 
