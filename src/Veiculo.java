@@ -162,8 +162,18 @@ public class Veiculo {
 
     @Override
     public String toString() {
-        return "Veiculo [matricula=" + matricula + ", horaEntrada=" + horaEntrada + ", horaSaida=" + horaSaida
-                + ", vagaAssociada=" + vagaAssociada + ", estacionado=" + estacionado + "]";
+       String estado;
+        if (estacionado) {
+            estado ="Estacionado";
+        }else{
+            estado = "Nao esta estacionado";
+        }
+        //caso tenha um veiculo associado em vez de mostrar toda informaçao do veiculo mostra so a matricula
+        if (vagaAssociada != null) {
+            return "Matricula [numeroMatricula =" + matricula + ", estado =" + estado + ", vagaAssociado =" + vagaAssociada.getNumeroVaga() + "Hora de entrada = "+ horaEntrada + ",Hora de saida"+ horaSaida + "]";
+        }else{
+             return "Matricula [numeroMatricula =" + matricula + ", estado =" + estado + "Hora de entrada = "+ horaEntrada + ",Hora de saida"+ horaSaida + "]";
+        }
     } 
 }
 //{} 

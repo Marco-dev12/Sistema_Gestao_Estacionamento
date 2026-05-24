@@ -138,8 +138,80 @@ public class Estacionamento {
         }
     }
 
-    public void listarVeiculosEstacionados(){}   
-    public void atualizarVagaVeiculo(){}
-    public void procurarVeiculoPorMatricula(){}  
+    public void listarVeiculosEstacionados(){
+        if (veiculos.isEmpty()) {
+            System.out.println("Lista esta vazia");
+            return;
+        }
+
+        boolean encontrou = false;
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.isEstacionado()) {
+                System.out.println(veiculo);
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhum veiculo estacionado");
+            return;
+        }
+    }   
+    public void atualizarVagaVeiculo(Veiculo veiculo , Vaga novaVaga){
+        //mover um veiculo de uma vaga paraa outra 
+
+        if (veiculo == null) {
+            System.out.println("Veiculo nao existe");
+            return;
+        }
+
+        if (!veiculo.isEstacionado()) {
+            System.out.println("Veiculo nao esta estaconado ");
+            return;
+        }
+
+        if (novaVaga == null) {
+             System.out.println("Vaga nao existe");
+            return;
+        }
+
+        if (!novaVaga.verificarDisponibilidade()) {
+            System.out.println("Vaga nao esta disponivel");
+            return;
+        }
+
+        if (veiculo.getVagaAssociada().getNumeroVaga() == novaVaga.getNumeroVaga()) {
+            System.out.println("Vagas sao iguais ");
+            return;
+        }
+
+        Vaga vagaAntiga = veiculo.getVagaAssociada();
+        vagaAntiga.liberarVaga();
+        novaVaga.ocuparVaga(veiculo);
+        veiculo.setVagaAssociada(novaVaga);
+    }
+    
+    public Veiculo procurarVeiculoPorMatricula(String matricula){
+
+        if (matricula == null) {
+            System.out.println("Matricula nao existe");
+            return null;
+        }
+        String matriculaProcurar = matricula.trim();
+
+        if (matriculaProcurar.isEmpty()) {
+            System.out.println("Matricula esta vazia");
+            return null;
+        }
+
+        for (Veiculo veiculo : veiculos) {
+            if ((veiculo.getMatricula().equalsIgnoreCase(matriculaProcurar))) {
+                System.out.println("Veiculo encontrado");
+                return veiculo;
+            }
+        }
+        System.out.println("Veiculo nao encontrado");
+        return null;
+    }  
 }
 //{} 
