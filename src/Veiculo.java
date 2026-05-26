@@ -134,7 +134,7 @@ public class Veiculo {
         this.setVagaAssociada(null);
         System.out.println("Saida registrada com sucesso");
     }
-    public void calcularTempoPermanencia(){//verificar 
+    /*public void calcularTempoPermanencia(){//verificar 
         //verificar se existe hora de entrada e saida 
         if (horaEntrada == null || horaSaida == null) {
             System.out.println("Nao é possivel calcular ");
@@ -156,10 +156,8 @@ public class Veiculo {
         long minutos = minutosAbsoluto % 60;
         long segundos = segundosAbsoluto % 60; 
         System.out.println("O carro de matricula " +this.getMatricula() + " ficou estacionado por : " +horas+ "hora " +minutos+ " minutos e " +segundos+ " segundos" );
-    }
+    }*/
     
-    //public void atualizarVaga(){}quando veiculo sair vagaAssociada sera nulo classe estacionamento  
-
     @Override
     public String toString() {
        String estado;
