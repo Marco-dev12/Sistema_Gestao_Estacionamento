@@ -7,10 +7,12 @@ public class Estacionamento {
 
     private ArrayList<Veiculo> veiculos;
     private ArrayList<Vaga> vagas;
+    private ArrayList<Pagamento> pagamentos;
     
     public Estacionamento() {
         this.veiculos = new ArrayList<>();
         this.vagas = new ArrayList<>();
+        this.pagamentos = new ArrayList<>();
     }
 
     public ArrayList<Veiculo> getVeiculos() {
@@ -213,5 +215,25 @@ public class Estacionamento {
         System.out.println("Veiculo nao encontrado");
         return null;
     }  
+
+    public void registrarPagamento(Pagamento pagamentoAdicionar){
+        if (pagamentoAdicionar == null) {
+            System.out.println("Pagamento nao existe");
+            return;
+        }
+
+        if (pagamentos.contains(pagamentoAdicionar)) {
+            System.out.println("Pagamento ja existe");
+            return;
+        }
+
+        if (!pagamentoAdicionar.isPago()) {
+            System.out.println("Pagamento nao foi confirmado");
+            return;
+        }
+
+        pagamentos.add(pagamentoAdicionar);
+        System.out.println("Pagamento adicionado a lista com sucesso");
+    } 
 }
 //{} 
