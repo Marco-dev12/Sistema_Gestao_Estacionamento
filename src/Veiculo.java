@@ -74,6 +74,11 @@ public class Veiculo {
     private boolean validarMatricula(String matricula){
         //garantir que :matrícula existe,formato está correto,evitar dados inválidos no sistema
 
+        if (matricula == null) {
+             System.out.println("Matricula nao pode ser nula");
+             return false;
+        }
+
         //tirar os espaços eantes e depois
         String matriculaSemEspaco = matricula.trim();
         //verificar se esta vazia
@@ -131,32 +136,10 @@ public class Veiculo {
         //mudar o estado
         this.setHoraSaida();
         this.setEstacionado(false);
+        
         this.setVagaAssociada(null);
         System.out.println("Saida registrada com sucesso");
     }
-    /*public void calcularTempoPermanencia(){//verificar 
-        //verificar se existe hora de entrada e saida 
-        if (horaEntrada == null || horaSaida == null) {
-            System.out.println("Nao é possivel calcular ");
-            return;
-        }
-
-        //como a difreneça eh entre duas variaveis do tipo localdatetime entao o tipo da variavelque ficara comovalor sera do tipo Duration pois representa um intervalo de tempo
-        Duration difernca = Duration.between(horaEntrada, horaSaida);
-        
-
-        //agora vou "dividir" em horas minutos e segundos ou seja tirar os  valores 
-        //usaremos o recurso disponivel de uma variavel do tipo Duration e para armazenar esses valoresa variavel serado tipo Long
-        //mas desse jeito vai retornar o valor absoluto e nao quero isso sim horas , minutos e segundos restantes
-        long horas= difernca.toHours();
-        long minutosAbsoluto= difernca.toMinutes();
-        long segundosAbsoluto=difernca.getSeconds();
-
-        //entao vou usar o modulo da divisao que vai pegar o resto  
-        long minutos = minutosAbsoluto % 60;
-        long segundos = segundosAbsoluto % 60; 
-        System.out.println("O carro de matricula " +this.getMatricula() + " ficou estacionado por : " +horas+ "hora " +minutos+ " minutos e " +segundos+ " segundos" );
-    }*/
     
     @Override
     public String toString() {
@@ -168,9 +151,16 @@ public class Veiculo {
         }
         //caso tenha um veiculo associado em vez de mostrar toda informaçao do veiculo mostra so a matricula
         if (vagaAssociada != null) {
-            return "Matricula [numeroMatricula =" + matricula + ", estado =" + estado + ", vagaAssociado =" + vagaAssociada.getNumeroVaga() + "Hora de entrada = "+ horaEntrada + ",Hora de saida"+ horaSaida + "]";
+           return "Veiculo [matricula=" + matricula
+                   + ", estado=" + estado
+                   + ", vaga=" + vagaAssociada.getNumeroVaga()
+                   + ", entrada=" + horaEntrada
+                   + ", saida=" + horaSaida + "]";
         }else{
-             return "Matricula [numeroMatricula =" + matricula + ", estado =" + estado + "Hora de entrada = "+ horaEntrada + ",Hora de saida"+ horaSaida + "]";
+             return "Veiculo [matricula=" + matricula
+                   + ", estado=" + estado
+                   + ", entrada=" + horaEntrada
+                   + ", saida=" + horaSaida + "]";
         }
     } 
 }
