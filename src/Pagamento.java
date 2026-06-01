@@ -35,10 +35,6 @@ public class Pagamento {
         return veiculoPagou;
     }
 
-    private void setVeiculoPagou(Veiculo veiculoPagou) {
-        this.veiculoPagou = veiculoPagou;
-    }
-
     public Duration getTempoPermanencia() {
         return tempoPermanencia;
     }
@@ -79,6 +75,11 @@ public class Pagamento {
             return;
         }
 
+        if (veiculoPagou.getHoraSaida().isBefore(veiculoPagou.getHoraEntrada())) {
+            System.out.println("Hora de saida invalida");
+            return;
+        }
+
         Duration diferenca = Duration.between(veiculoPagou.getHoraEntrada(), veiculoPagou.getHoraSaida());
         this.setTempoPermanencia(diferenca);
     } 
@@ -98,6 +99,10 @@ public class Pagamento {
             horas = horas + 1;
         }
 
+        if (horas == 0) {
+            horas = horas + 1;
+        }
+
         this.setValorTotal(horas*valorPorHora);
     }
 
@@ -109,6 +114,11 @@ public class Pagamento {
 
         if (tempoPermanencia == null) {
             System.out.println("Nao tem tempo permanencia");
+            return;
+        }
+
+        if (valorTotal <= 0) {
+            System.out.println("Valor ainda nao calculado");
             return;
         }
         this.setPago(true);
@@ -148,7 +158,24 @@ public class Pagamento {
         System.out.println("Permanencia : " + horas+"h"  + minutos+"m"+  segundos+"s");
         System.out.println("Valor : " +this.getValorTotal());
         System.out.println("Estado : " +estado);
-        System.out.println("Data de pagamento : " +dataPagamento);
+        if (dataPagamento != null) {
+          System.out.println("Data de pagamento : " +dataPagamento);   
+        }else{
+             System.out.println("Data de pagamento : " +"Sem data de pagamento");   
+        } 
         System.out.println("------------------------");
     }    
+
+    @Override
+    public String toString() {
+     String matricula = "Sem veiculo";
+
+     if (veiculoPagou != null) {
+    matricula = veiculoPagou.getMatricula();
+     }
+
+      return "Pagamento [matricula=" + matricula
+        + ", valorTotal=" + valorTotal
+        + ", pago=" + pago + "]";
+    }
 }

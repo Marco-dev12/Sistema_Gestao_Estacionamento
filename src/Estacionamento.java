@@ -5,31 +5,53 @@ public class Estacionamento {
     //o “cérebro” do sistema ou seja coordena tudo
     //vai representar os estcionados atuais
 
-    private ArrayList<Veiculo> veiculos;
-    private ArrayList<Vaga> vagas;
-    private ArrayList<Pagamento> pagamentos;
+    private ListaVeiculos veiculos;
+    private ListaVaga vagas;
+    private ListaPagamento pagamentos;
     
     public Estacionamento() {
-        this.veiculos = new ArrayList<>();
-        this.vagas = new ArrayList<>();
-        this.pagamentos = new ArrayList<>();
+        this.veiculos = new ListaVeiculos();
+        this.vagas = new ListaVaga();
+        this.pagamentos = new ListaPagamento();
     }
 
-    public ArrayList<Veiculo> getVeiculos() {
+   
+
+    public ListaVeiculos getVeiculos() {
         return veiculos;
     }
 
-    public void setVeiculos(ArrayList<Veiculo> veiculos) {
+
+
+    public void setVeiculos(ListaVeiculos veiculos) {
         this.veiculos = veiculos;
     }
 
-    public ArrayList<Vaga> getVagas() {
+
+
+    public ListaVaga getVagas() {
         return vagas;
     }
 
-    public void setVagas(ArrayList<Vaga> vagas) {
+
+
+    public void setVagas(ListaVaga vagas) {
         this.vagas = vagas;
     }
+
+
+
+    public ListaPagamento getPagamentos() {
+        return pagamentos;
+    }
+
+
+
+    public void setPagamentos(ListaPagamento pagamentos) {
+        this.pagamentos = pagamentos;
+    }
+
+
 
     public void adicionarVaga(Vaga vagaAdicionar ){
         //Adicionar uma vaga à lista do estacionamento.
@@ -39,16 +61,12 @@ public class Estacionamento {
             return;
         }
 
-        //verificar se existe um vaga com o mesmo numero 
-        for (Vaga vaga : vagas) {
-            if (vaga.getNumeroVaga() == vagaAdicionar.getNumeroVaga()) {
-                System.out.println("Vaga com esse numero ja existente");
-                return;
-            }
+        if (vagas.procurarPorNumero(vagaAdicionar.getNumeroVaga()) != null) {
+            System.out.println("Vaga com esse numero ja existente");
+            return;
         }
 
-        //adicionar vaga a lista
-        vagas.add(vagaAdicionar);
+        vagas.inserirFim(vagaAdicionar);
         System.out.println("Vaga adicionada ao estacionamento com sucesso");
     } 
     public void registraEntrada(Veiculo veiculoEntrar){
@@ -75,17 +93,15 @@ public class Estacionamento {
        
 
         //verificar se o veiculo ja nao esta na lista percorendo e comparando matricula
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getMatricula().equals(veiculoEntrar.getMatricula())) {
-            System.out.println("Veiculo ja adicionado a lista");
-            return;
-        }     
-        }
+       if (veiculos.procurarPorMatricula(veiculoEntrar.getMatricula()) != null) {
+           System.out.println("Veiculo ja adicionado a lista");
+           return;
+       }
        
         //vou ligar o veiculo a vaga e a vaga ao veiculo e adicionar veiculo a lista 
         veiculoEntrar.registrarEntrada(vagaLivre);
         vagaLivre.ocuparVaga(veiculoEntrar);
-        veiculos.add(veiculoEntrar);
+        veiculos.inserirFim(veiculoEntrar);
     }
 
     public void registraSaida(Veiculo veiculoSair){
@@ -113,52 +129,31 @@ public class Estacionamento {
         //liberar vaga,registrar saida e remover da lista
         vagaAssociada.liberarVaga();
         veiculoSair.registrarSaida();
-        veiculos.remove(veiculoSair);
+        veiculos.removerPorMatricula(veiculoSair.getMatricula());
     }  
     
     public Vaga procurarVagaLivre(){
-        //percorer a lista de vaga
-        for (Vaga vaga : vagas) {
-            //verificar se vaga esta disponivel
-            if (vaga.verificarDisponibilidade()) {
-                return vaga;
-            }
-        }
-        return null;
+       NoVaga atual = vagas.getInicio();
+
+       while (atual != null) {
+         if (atual.getInfo().verificarDisponibilidade()) {
+            return atual.getInfo();
+         }
+         atual = atual.getProximo();
+       }
+
+       return null;
     }
     
     public void listarVagas(){
         //Mostrar todas as vagas cadastradas no estacionamento.
-        //veririfcar se existem vagas cadastradas oou seja se a lista esta vazia ou nao 
-        if (vagas.isEmpty()) {
-            System.out.println("Lista esta vazia");
-            return;
-        }
-
-        for (Vaga vaga : vagas) {
-            System.out.println(vaga);
-        }
+        vagas.listar();
     }
 
     public void listarVeiculosEstacionados(){
-        if (veiculos.isEmpty()) {
-            System.out.println("Lista esta vazia");
-            return;
-        }
-
-        boolean encontrou = false;
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.isEstacionado()) {
-                System.out.println(veiculo);
-                encontrou = true;
-            }
-        }
-
-        if (!encontrou) {
-            System.out.println("Nenhum veiculo estacionado");
-            return;
-        }
+      veiculos.listarVeiculosEstacionados();
     }   
+
     public void atualizarVagaVeiculo(Veiculo veiculo , Vaga novaVaga){
         //mover um veiculo de uma vaga paraa outra 
 
@@ -194,26 +189,7 @@ public class Estacionamento {
     }
     
     public Veiculo procurarVeiculoPorMatricula(String matricula){
-
-        if (matricula == null) {
-            System.out.println("Matricula nao existe");
-            return null;
-        }
-        String matriculaProcurar = matricula.trim();
-
-        if (matriculaProcurar.isEmpty()) {
-            System.out.println("Matricula esta vazia");
-            return null;
-        }
-
-        for (Veiculo veiculo : veiculos) {
-            if ((veiculo.getMatricula().equalsIgnoreCase(matriculaProcurar))) {
-                System.out.println("Veiculo encontrado");
-                return veiculo;
-            }
-        }
-        System.out.println("Veiculo nao encontrado");
-        return null;
+        return veiculos.procurarPorMatricula(matricula);
     }  
 
     public void registrarPagamento(Pagamento pagamentoAdicionar){
@@ -222,7 +198,7 @@ public class Estacionamento {
             return;
         }
 
-        if (pagamentos.contains(pagamentoAdicionar)) {
+        if (pagamentos.procurarPorMatricula(pagamentoAdicionar.getVeiculoPagou().getMatricula() ) != null) {
             System.out.println("Pagamento ja existe");
             return;
         }
@@ -232,7 +208,7 @@ public class Estacionamento {
             return;
         }
 
-        pagamentos.add(pagamentoAdicionar);
+        pagamentos.inserirFim(pagamentoAdicionar);
         System.out.println("Pagamento adicionado a lista com sucesso");
     } 
 }

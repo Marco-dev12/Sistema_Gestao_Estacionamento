@@ -167,4 +167,27 @@ public class ListaVaga {
 
          this.tamanho--;
     }
+
+    public Vaga procurarPorNumero(int numeroVaga) {
+
+    if (isVazia()) {
+        System.out.println("Lista vazia");
+        return null;
+    }
+
+    NoVaga atual = inicio;
+
+    while (atual != null) {
+
+        if (atual.getInfo().getNumeroVaga() == numeroVaga) {
+            System.out.println("Vaga encontrada");
+            return atual.getInfo();
+        }
+
+        atual = atual.getProximo();
+    }
+
+    System.out.println("Vaga nao encontrada");
+    return null;
+}
 }

@@ -286,4 +286,25 @@ public void removerPorMatricula(String matricula) {
 
     System.out.println("Veiculo nao encontrado");
 }
+
+   public void listarVeiculosEstacionados(){
+        
+        if (isVazia()) {
+            System.out.println("Lista vazia");
+            return;
+        }
+        NoVeiculo atual = inicio;
+        boolean encontrou = false;
+        while (atual != null) {
+        if (atual.getInfo().isEstacionado()) {
+            System.out.println(atual.getInfo());
+             encontrou = true;
+        }
+        atual = atual.getProximo();
+    }
+    if (!encontrou) {
+            System.out.println("Nenhum veiculo estacionado");
+            return;
+        }
+    }
 }

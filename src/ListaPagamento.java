@@ -168,4 +168,43 @@ public class ListaPagamento {
 
          this.tamanho--;
     }
+
+    public Pagamento procurarPorMatricula(String matricula) {
+
+    if (matricula == null) {
+        System.out.println("Matricula invalida");
+        return null;
+    }
+
+    String matriculaProcurar = matricula.trim();
+
+    if (matriculaProcurar.isEmpty()) {
+        System.out.println("Matricula vazia");
+        return null;
+    }
+
+    if (isVazia()) {
+        System.out.println("Lista vazia");
+        return null;
+    }
+
+    NoPagamento atual = inicio;
+
+    while (atual != null) {
+
+        if (atual.getInfo()
+                 .getVeiculoPagou()
+                 .getMatricula()
+                 .equalsIgnoreCase(matriculaProcurar)) {
+
+            System.out.println("Pagamento encontrado");
+            return atual.getInfo();
+        }
+
+        atual = atual.getProximo();
+    }
+
+    System.out.println("Pagamento nao encontrado");
+    return null;
+}
 }
