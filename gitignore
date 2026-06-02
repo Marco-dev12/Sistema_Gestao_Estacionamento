@@ -1,0 +1,6 @@
+# ficheiros compilados Java - nao devem ir para o GitHub
+bin/
+*.class
+
+# ficheiro de configuracao local do VS Code (opcional)
+.vscode/settings.json
