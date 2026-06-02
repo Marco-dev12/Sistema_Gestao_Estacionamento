@@ -6,7 +6,7 @@ public class Vaga {
     private boolean reservada;//indicar se a vaga esta reservada ou nao 
     
     public Vaga(int numeroVaga) {
-        this.setNumeroVaga(numeroVaga);
+        this.numeroVaga = numeroVaga;
         this.ocupada = false;
         this.veiculoAssociado = null;
         this.reservada = false;
@@ -17,11 +17,7 @@ public class Vaga {
     }
 
     public void setNumeroVaga(int numeroVaga) {
-        if (numeroVaga <= 0) {
-            throw new IllegalArgumentException("Numero de vaga invalido");
-        }else{
-            this.numeroVaga = numeroVaga;
-        } 
+        this.numeroVaga = numeroVaga;
     }
 
     public boolean isOcupada() {
@@ -63,7 +59,7 @@ public class Vaga {
         if (veiculoAssociado != null) {
             return "Vaga [numeroVaga =" + numeroVaga + ", estado =" + estado + ", veiculoAssociado =" + veiculoAssociado.getMatricula() +"]";
         }else{
-            return "Vaga [numeroVaga =" + numeroVaga + ", estado =" + estado + "veiculo associado = "+"Nenhum veiculo aasociado" +"]";
+            return "Vaga [numeroVaga =" + numeroVaga + ", estado =" + estado + ", veiculo associado = Nenhum" +"]";
         }
     }
     

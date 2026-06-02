@@ -184,7 +184,6 @@ public class ListaPagamento {
     }
 
     if (isVazia()) {
-        System.out.println("Lista vazia");
         return null;
     }
 
@@ -197,14 +196,12 @@ public class ListaPagamento {
                  .getMatricula()
                  .equalsIgnoreCase(matriculaProcurar)) {
 
-            System.out.println("Pagamento encontrado");
             return atual.getInfo();
         }
 
         atual = atual.getProximo();
     }
 
-    System.out.println("Pagamento nao encontrado");
     return null;
 }
 }

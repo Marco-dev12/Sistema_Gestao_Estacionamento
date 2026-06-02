@@ -198,11 +198,6 @@ public class Estacionamento {
             return;
         }
 
-        if (pagamentoAdicionar.getVeiculoPagou() == null) {
-            System.out.println("Pagamento sem veiculo associado");
-            return;
-        }
-        
         if (pagamentos.procurarPorMatricula(pagamentoAdicionar.getVeiculoPagou().getMatricula() ) != null) {
             System.out.println("Pagamento ja existe");
             return;

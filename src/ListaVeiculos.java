@@ -212,7 +212,6 @@ public class ListaVeiculos {
     }
 
     if (isVazia()) {
-        System.out.println("Lista vazia");
         return null;
     }
 
@@ -221,14 +220,12 @@ public class ListaVeiculos {
     while (atual != null) {
 
         if (atual.getInfo().getMatricula().equalsIgnoreCase(matriculaProcurar)) {
-            System.out.println("Veiculo encontrado");
             return atual.getInfo();
         }
 
         atual = atual.getProximo();
     }
 
-    System.out.println("Veiculo nao encontrado");
     return null;
 }
 

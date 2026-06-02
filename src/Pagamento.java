@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Pagamento {
     private double valorPorHora;
@@ -122,8 +123,9 @@ public class Pagamento {
             return;
         }
         this.setPago(true);
-        this.setDataPagamento(LocalDateTime.now()); 
-        System.out.println("Foi pago em : " +dataPagamento);
+        this.setDataPagamento(LocalDateTime.now());
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        System.out.println("Foi pago em : " + dataPagamento.format(formato));
     }
 
     public void exibirRecibo(){
@@ -151,18 +153,20 @@ public class Pagamento {
         long minutos = minutosAbsoluto % 60;
         long segundos = segundosAbsoluto % 60; 
 
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         System.out.println("---------Recibo---------");
         System.out.println("Matricula : " +veiculoPagou.getMatricula());
-        System.out.println("Entrada : " +veiculoPagou.getHoraEntrada());
-        System.out.println("Saida : " +veiculoPagou.getHoraSaida());
+        System.out.println("Entrada : " + veiculoPagou.getHoraEntrada().format(formato));
+        System.out.println("Saida : " + veiculoPagou.getHoraSaida().format(formato));
         System.out.println("Permanencia : " + horas+"h"  + minutos+"m"+  segundos+"s");
-        System.out.println("Valor : " +this.getValorTotal());
+        System.out.println("Valor : " +this.getValorTotal() + " CVE");
         System.out.println("Estado : " +estado);
         if (dataPagamento != null) {
-          System.out.println("Data de pagamento : " +dataPagamento);   
+          System.out.println("Data de pagamento : " + dataPagamento.format(formato));
         }else{
-             System.out.println("Data de pagamento : " +"Sem data de pagamento");   
-        } 
+             System.out.println("Data de pagamento : " +"Sem data de pagamento");
+        }
         System.out.println("------------------------");
     }    
 
