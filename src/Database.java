@@ -6,9 +6,8 @@ public class Database {
     private static final String USUARIO  = "root";
     private static final String PASSWORD = "";
 
-    // =====================================================================
+
     // LIGACAO
-    // =====================================================================
 
     public static Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USUARIO, PASSWORD);
@@ -26,9 +25,8 @@ public class Database {
         }
     }
 
-    // =====================================================================
+
     // CRIAR TABELAS
-    // =====================================================================
 
     public static void criarTabelas() {
 
@@ -78,9 +76,7 @@ public class Database {
         }
     }
 
-    // =====================================================================
     // VAGAS
-    // =====================================================================
 
     public static void guardarVaga(Vaga vaga) {
         String query = "INSERT IGNORE INTO vagas (numero_vaga, ocupada, reservada) VALUES (?, ?, ?)";
@@ -134,9 +130,9 @@ public class Database {
         }
     }
 
-    // =====================================================================
+
     // VEICULOS
-    // =====================================================================
+
 
     public static void guardarVeiculo(Veiculo veiculo) {
         String query = """
@@ -287,9 +283,8 @@ public class Database {
         }
     }
 
-    // =====================================================================
+
     // PAGAMENTOS
-    // =====================================================================
 
     public static void guardarPagamento(Pagamento pagamento) {
         String query = """
@@ -320,9 +315,8 @@ public class Database {
         }
     }
 
-    // =====================================================================
+
     // RELATORIO
-    // =====================================================================
 
     public static int totalVagasLivres() {
         String query = "SELECT COUNT(*) FROM vagas WHERE ocupada = 0 AND reservada = 0";
@@ -360,7 +354,10 @@ public class Database {
                 System.out.println("Matricula      : " + rs.getString("matricula"));
                 System.out.println("Valor total    : " + rs.getDouble("valor_total") + " CVE");
                 System.out.println("Horas          : " + rs.getLong("tempo_horas") + "h");
-                System.out.println("Data pagamento : " + rs.getTimestamp("data_pagamento"));
+                java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                java.sql.Timestamp ts = rs.getTimestamp("data_pagamento");
+                String dataFmt = ts != null ? ts.toLocalDateTime().format(fmt) : "Sem data";
+                System.out.println("Data pagamento : " + dataFmt);
                 System.out.println("Estado         : " + (rs.getBoolean("pago") ? "Pago" : "Pendente"));
                 System.out.println("---------------------------------------");
                 encontrou = true;

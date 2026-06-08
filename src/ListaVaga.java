@@ -180,14 +180,11 @@ public class ListaVaga {
     while (atual != null) {
 
         if (atual.getInfo().getNumeroVaga() == numeroVaga) {
-            System.out.println("Vaga encontrada");
             return atual.getInfo();
         }
 
         atual = atual.getProximo();
     }
-
-    System.out.println("Vaga nao encontrada");
     return null;
 }
 }

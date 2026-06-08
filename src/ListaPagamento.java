@@ -172,14 +172,12 @@ public class ListaPagamento {
     public Pagamento procurarPorMatricula(String matricula) {
 
     if (matricula == null) {
-        System.out.println("Matricula invalida");
         return null;
     }
 
     String matriculaProcurar = matricula.trim();
 
     if (matriculaProcurar.isEmpty()) {
-        System.out.println("Matricula vazia");
         return null;
     }
 

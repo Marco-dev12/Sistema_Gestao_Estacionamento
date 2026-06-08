@@ -287,7 +287,7 @@ public void removerPorMatricula(String matricula) {
    public void listarVeiculosEstacionados(){
         
         if (isVazia()) {
-            System.out.println("Lista vazia");
+            System.out.println("Nenhum veiculo estacionado.");
             return;
         }
         NoVeiculo atual = inicio;
