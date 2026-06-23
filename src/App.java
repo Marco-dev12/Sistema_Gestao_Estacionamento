@@ -9,8 +9,8 @@ public class App {
             return;
         }
 
-        // 2. criar tabelas se nao existirem
-        Database.criarTabelas();
+        //2. criar tabelas se nao existirem 
+        //Database.criarTabelas(); - ja temos o estacionamento.sql
 
         // 3. criar o estacionamento e carregar dados guardados
         Estacionamento estacionamento = new Estacionamento();

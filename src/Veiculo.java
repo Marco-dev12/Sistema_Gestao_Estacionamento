@@ -20,14 +20,25 @@ public class Veiculo {
     }
 
     public Veiculo(String matricula, String marca, String modelo) {
-        this.setMatricula(matricula);
-        this.marca        = marca;
-        this.modelo       = modelo;
-        this.horaEntrada  = null;
-        this.horaSaida    = null;
-        this.vagaAssociada = null;
-        this.estacionado  = false;
+    this.setMatricula(matricula);
+
+    if (marca == null || marca.trim().isEmpty()) {
+        this.marca = "Desconhecida";
+    } else {
+        this.marca = marca.trim();
     }
+
+    if (modelo == null || modelo.trim().isEmpty()) {
+        this.modelo = "Desconhecido";
+    } else {
+        this.modelo = modelo.trim();
+    }
+
+    this.horaEntrada = null;
+    this.horaSaida = null;
+    this.vagaAssociada = null;
+    this.estacionado = false;
+}
 
     // --- getters e setters ---
 
